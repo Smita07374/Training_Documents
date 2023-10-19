@@ -263,6 +263,8 @@ ansible-playbook test_var-datatype1.yaml
 
 ansible-playbook install3.yaml -e "host_name=samplenode1 tool_name=git tool_state=present"
 
+ansible-playbook installtools_rt.yaml -e "host_name=all tool_name=git tool_state=present"
+
 ###state : present / absent / latest 
 
 Handlers :::
@@ -309,6 +311,8 @@ Ansible Roles :::
 
 ansible-galaxy init rolename
 
+ansible-galaxy init testrole1
+
 ---
 # tasks file for testrole1
       - name: Install-nginx
@@ -334,12 +338,16 @@ ansible-galaxy init rolename
   roles:
     - role: testrole1
 
+ansible-playbook testrole1.yml
 
 ---
-- hosts: {{host_name}}
+- hosts: "{{host_name}}"
   become: yes
   roles:
-    - role: {{role_name}}	  
+    - role: "{{role_name}}"	  
+
+ansible-playbook testrole_rt.yml -e "host_name=all role_name=testrole1"
+
 
 
 
